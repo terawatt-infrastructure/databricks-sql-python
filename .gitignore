@@ -205,6 +205,7 @@ build/
 
 # vs code stuff
 .vscode
+.devcontainer
 
 # don't commit authentication info to source control
 test.env
