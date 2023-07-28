@@ -86,6 +86,10 @@ class DatabricksDialect(default.DefaultDialect):
     @classmethod
     def dbapi(cls):
         return sql
+    
+    @classmethod
+    def import_dbapi(cls):
+        return sql
 
     def create_connect_args(self, url):
         # TODO: can schema be provided after HOST?
