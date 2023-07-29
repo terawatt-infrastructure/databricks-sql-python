@@ -46,6 +46,7 @@ class DatabricksTimestamp(types.TypeDecorator):
     """Translates timestamp strings to datetime objects"""
 
     impl = types.TIMESTAMP
+    cache_ok = True
 
     def process_result_value(self, value, dialect):
         return value
@@ -86,7 +87,7 @@ class DatabricksDialect(default.DefaultDialect):
     @classmethod
     def dbapi(cls):
         return sql
-    
+
     @classmethod
     def import_dbapi(cls):
         return sql
@@ -169,7 +170,6 @@ class DatabricksDialect(default.DefaultDialect):
         columns = []
 
         for col in resp:
-
             # Taken from PyHive. This removes added type info from decimals and maps
             _col_type = re.search(r"^\w+", col.TYPE_NAME).group(0)
             this_column = {
