@@ -5,7 +5,7 @@ import decimal, re, datetime
 from dateutil.parser import parse
 
 import sqlalchemy
-from sqlalchemy import types, event
+from sqlalchemy import types, event, text
 from sqlalchemy.engine import default, Engine
 from sqlalchemy.exc import DatabaseError, SQLAlchemyError
 from sqlalchemy.engine import reflection
@@ -285,9 +285,9 @@ class DatabricksDialect(default.DefaultDialect):
         DBR_GT_12_NOT_FOUND_STRING = "TABLE_OR_VIEW_NOT_FOUND"
 
         try:
-            res = connection.execute(
+            res = connection.execute(text(
                 f"DESCRIBE TABLE {_catalog}.{_schema}.{table_name}"
-            )
+            ))
             return True
         except DatabaseError as e:
             if DBR_GT_12_NOT_FOUND_STRING in str(
